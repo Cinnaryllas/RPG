@@ -229,15 +229,29 @@ class Elements :
 
 class Epee(Armes):
 
-    def __init__(self, degats = 5):
+    def __init__(self, degats = 5, quantite = 0):
         super().__init__(degats)
+        self.__quantite = quantite
+
+    def getQuantite(self):
+        return self.__quantite
+
+    def setQuantite(self, quantite):
+        self.__quantite = quantite
 
 class Arc(Armes):
     
-    def __init__(self, degats = 3):
+    def __init__(self, degats = 3, quantite = 0):
         super().__init__(degats)
         self.__nbFleches = 50
         self.__nbFlechesMax = 50
+        self.__quantite = quantite
+
+    def getQuantite(self):
+        return self.__quantite
+
+    def setQuantite(self, quantite):
+        self.__quantite = quantite
 
     #region getter fleches
     def getNbFleches(self):
@@ -249,32 +263,74 @@ class Arc(Armes):
 
 class Dague(Armes):
     
-    def __init__(self, degats = 2):
+    def __init__(self, degats = 2, quantite = 0):
         super().__init__(degats)
+        self.__quantite = quantite
+
+    def getQuantite(self):
+        return self.__quantite
+
+    def setQuantite(self, quantite):
+        self.__quantite = quantite
 
 class Baton(Armes):
 
-    def __init__(self, degats = 2):
+    def __init__(self, degats = 2, quantite = 0):
         super().__init__(degats)
+        self.__quantite = quantite
+
+    def getQuantite(self):
+        return self.__quantite
+
+    def setQuantite(self, quantite):
+        self.__quantite = quantite
 
 class Lance(Armes):
 
-    def __init__(self, degats = 5):
+    def __init__(self, degats = 5, quantite = 0):
         super().__init__(degats)
+        self.__quantite = quantite
+
+    def getQuantite(self):
+        return self.__quantite
+
+    def setQuantite(self, quantite):
+        self.__quantite = quantite
 
 class BouclierLance(Armes):
 
-    def __init__(self, degats = 5):
+    def __init__(self, degats = 5, quantite = 0):
         super().__init__(degats)
+        self.__quantite = quantite
+
+    def getQuantite(self):
+        return self.__quantite
+
+    def setQuantite(self, quantite):
+        self.__quantite = quantite
 
 
 class ArmureLourde(Armures):
-    def __init__(self, protection=6):
+    def __init__(self, protection=6, quantite = 0):
         super().__init__(self)
+        self.__quantite = quantite
+
+    def getQuantite(self):
+        return self.__quantite
+
+    def setQuantite(self, quantite):
+        self.__quantite = quantite
 
 class ArmureLégère(Armures):
-    def __init__(self, protection=3):
+    def __init__(self, protection=3, quantite = 0):
         super().__init__(self)
+        self.__quantite = quantite
+
+    def getQuantite(self):
+        return self.__quantite
+
+    def setQuantite(self, quantite):
+        self.__quantite = quantite
 
 
 class Mage(Personnage, Elements) : 
@@ -301,62 +357,74 @@ class Mage(Personnage, Elements) :
 
     #region sort
     def lancerSortFeu(self, ennemi) :
-        randomInt = randint(0,10)
-        if (randomInt > ennemi.getAgi()):
+        if(self.getMagie() >= 10.0):
             randomInt = randint(0,10)
-            if (randomInt <= self.getCrit()) :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getPyro())*2 - (ennemi.getDef() + ennemi.getProtectArmure())))
-                self.setMagie(self.getMagie()-10)
-            else :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getPyro()) - (ennemi.getDef() + ennemi.getProtectArmure())))
-                self.setMagie(self.getMagie()-10)
+            if (randomInt > ennemi.getAgi()):
+                randomInt = randint(0,10)
+                if (randomInt <= self.getCrit()) :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getPyro())*2 - (ennemi.getDef() + ennemi.getProtectArmure())))
+                    self.setMagie(self.getMagie()-10)
+                else :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getPyro()) - (ennemi.getDef() + ennemi.getProtectArmure())))
+                    self.setMagie(self.getMagie()-10)
+        else:
+            print("Je n'ai pas assez de mana")
 
     def lancerSortCryo(self, ennemi) :
-        randomInt = randint(0,10)
-        if (randomInt > ennemi.getAgi()):
+        if(self.getMagie() >= 10.0):
             randomInt = randint(0,10)
-            if (randomInt <= self.getCrit()) :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getCryo())*2 - (ennemi.getDef() + ennemi.getProtectArmure())))
-                self.setMagie(self.getMagie()-10)
-            else :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getCryo()) - (ennemi.getDef() + ennemi.getProtectArmure())))
-                self.setMagie(self.getMagie()-10)
-
+            if (randomInt > ennemi.getAgi()):
+                randomInt = randint(0,10)
+                if (randomInt <= self.getCrit()) :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getCryo())*2 - (ennemi.getDef() + ennemi.getProtectArmure())))
+                    self.setMagie(self.getMagie()-10)
+                else :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getCryo()) - (ennemi.getDef() + ennemi.getProtectArmure())))
+                    self.setMagie(self.getMagie()-10)
+        else:
+            print("Je n'ai pas assez de mana")
 
     def lancerSortHydro(self, ennemi) :
-        randomInt = randint(0,10)
-        if (randomInt > ennemi.getAgi()):
+        if(self.getMagie() >= 10.0):
             randomInt = randint(0,10)
-            if (randomInt <= self.getCrit()) :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getDeath()) - (ennemi.getDef() + ennemi.getProtectArmure())))
-                self.setMagie(self.getMagie()-10)
-            else :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getLife()) - (ennemi.getDef() + ennemi.getProtectArmure())))
-                self.setMagie(self.getMagie()-10)
-
+            if (randomInt > ennemi.getAgi()):
+                randomInt = randint(0,10)
+                if (randomInt <= self.getCrit()) :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getDeath()) - (ennemi.getDef() + ennemi.getProtectArmure())))
+                    self.setMagie(self.getMagie()-10)
+                else :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getLife()) - (ennemi.getDef() + ennemi.getProtectArmure())))
+                    self.setMagie(self.getMagie()-10)
+        else:
+            print("Je n'ai pas assez de mana")
 
     def lancerSortDeath(self, ennemi) :
-        randomInt = randint(0,10)
-        if (randomInt > ennemi.getAgi()):
+        if(self.getMagie() >= 10.0):
             randomInt = randint(0,10)
-            if (randomInt <= self.getCrit()) :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getDeath())*2 - (ennemi.getDef() + ennemi.getProtectArmure())))
-                self.setMagie(self.getMagie()-10)
-            else :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getDeath()) - (ennemi.getDef() + ennemi.getProtectArmure())))
-                self.setMagie(self.getMagie()-10)
-
+            if (randomInt > ennemi.getAgi()):
+                randomInt = randint(0,10)
+                if (randomInt <= self.getCrit()) :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getDeath())*2 - (ennemi.getDef() + ennemi.getProtectArmure())))
+                    self.setMagie(self.getMagie()-10)
+                else :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getDeath()) - (ennemi.getDef() + ennemi.getProtectArmure())))
+                    self.setMagie(self.getMagie()-10)
+        else:
+            print("Je n'ai pas assez de mana")
 
     def lancerSortLife(self, ennemi) :
-        randomInt = randint(0,10)
-        if (randomInt > ennemi.getAgi()):
+        if(self.getMagie() >= 10.0):
             randomInt = randint(0,10)
-            if (randomInt <= self.getCrit()) :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getLife())*2 - (ennemi.getDef() + ennemi.getProtectArmure())))
-                self.setMagie(self.getMagie()-10)
-            else :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getLife()) - (ennemi.getDef() + ennemi.getProtectArmure())))
-                self.setMagie(self.getMagie()-10)
+            if (randomInt > ennemi.getAgi()):
+                randomInt = randint(0,10)
+                if (randomInt <= self.getCrit()) :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getLife())*2 - (ennemi.getDef() + ennemi.getProtectArmure())))
+                    self.setMagie(self.getMagie()-10)
+                else :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme() + self.getLife()) - (ennemi.getDef() + ennemi.getProtectArmure())))
+                    self.setMagie(self.getMagie()-10)
+        else:
+            print("Je n'ai pas assez de mana")
 
     #endregion
 
@@ -396,37 +464,46 @@ class Pretre(Personnage) :
     
     #region sort Pretre
     def sortSoin(self, allier) :
-        randomInt = randint(0,10)
-        if (randomInt > allier.getAgi()):
+        if(self.getMagie() >= 10.0):
             randomInt = randint(0,10)
-            if (randomInt <= self.getCrit()) :
-                allier.setHp(allier.getHp()+5*2)
-                self.setMagie(self.getMagie()-10)
-            else:
-                allier.setHp(allier.getHp()+5)
-                self.setMagie(self.getMagie()-10)
+            if (randomInt > allier.getAgi()):
+                randomInt = randint(0,10)
+                if (randomInt <= self.getCrit()) :
+                    allier.setHp(allier.getHp()+5*2)
+                    self.setMagie(self.getMagie()-10)
+                else:
+                    allier.setHp(allier.getHp()+5)
+                    self.setMagie(self.getMagie()-10)
+        else:
+            print("Je n'ai pas assez de mana")
             
     def sortDef(self, allier) :
-        randomInt = randint(0,10)
-        if (randomInt > allier.getAgi()):
+        if(self.getMagie() >= 10.0):
             randomInt = randint(0,10)
-            if (randomInt <= self.getCrit()) :
-                allier.setDef(allier.getDef()+3*2)
-                self.setMagie(self.getMagie()-10)
-            else:
-                allier.setDef(allier.getDef()+3)
-                self.setMagie(self.getMagie()-10)
+            if (randomInt > allier.getAgi()):
+                randomInt = randint(0,10)
+                if (randomInt <= self.getCrit()) :
+                    allier.setDef(allier.getDef()+3*2)
+                    self.setMagie(self.getMagie()-10)
+                else:
+                    allier.setDef(allier.getDef()+3)
+                    self.setMagie(self.getMagie()-10)
+        else:
+            print("Je n'ai pas assez de mana")
 
     def sortAgi(self, allier) :
-        randomInt = randint(0,10)
-        if (randomInt > allier.getAgi()):
+        if(self.getMagie() >= 10.0):
             randomInt = randint(0,10)
-            if (randomInt <= self.getCrit()) :
-                allier.setAgi(allier.getAgi()+2*2)
-                self.setMagie(self.getMagie()-10)
-            else:
-                allier.setAgi(allier.getAgi()+2)
-                self.setMagie(self.getMagie()-10)
+            if (randomInt > allier.getAgi()):
+                randomInt = randint(0,10)
+                if (randomInt <= self.getCrit()) :
+                    allier.setAgi(allier.getAgi()+2*2)
+                    self.setMagie(self.getMagie()-10)
+                else:
+                    allier.setAgi(allier.getAgi()+2)
+                    self.setMagie(self.getMagie()-10)
+        else:
+            print("Je n'ai pas assez de mana")
     #endregion
 
     #region getter Pretre
@@ -467,6 +544,7 @@ class Voleur(Personnage):
         ennemi.setHp(ennemi.getHp() - ennemi.getHp())
 
     def attaqueRapide(self, ennemi):
+        if(self.getStamina() >= 10.0):
             randomInt = randint(0,10)
             if (randomInt > ennemi.getAgi()):
                 randomInt = randint(0,10)
@@ -476,6 +554,8 @@ class Voleur(Personnage):
                 else :
                     ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme()) - (ennemi.getDef() + ennemi.getProtectArmure())/self.getDefPen()))
                     self.setStamina(self.getStamina()-10)
+        else:
+            print("Je n'ai pas assez de stamina")
 
 class Archer(Personnage):
         
@@ -497,15 +577,18 @@ class Archer(Personnage):
                 print("Cette armure ne me convient pas")
 
         def tir(self, ennemi):
-            randomInt = randint(0,10)
-            if (randomInt > ennemi.getAgi()):
+            if(self.getStamina() >= 10):
                 randomInt = randint(0,10)
-                if (randomInt <= self.getCrit()) :
-                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme())*2 - (ennemi.getDef() + ennemi.getProtectArmure())/self.getDefPen()))
-                    self.setStamina(self.getStamina()-10)
-                else :
-                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme()) - (ennemi.getDef() + ennemi.getProtectArmure())/self.getDefPen()))
-                    self.setStamina(self.getStamina()-10)
+                if (randomInt > ennemi.getAgi()):
+                    randomInt = randint(0,10)
+                    if (randomInt <= self.getCrit()) :
+                        ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme())*2 - (ennemi.getDef() + ennemi.getProtectArmure())/self.getDefPen()))
+                        self.setStamina(self.getStamina()-10)
+                    else :
+                        ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme()) - (ennemi.getDef() + ennemi.getProtectArmure())/self.getDefPen()))
+                        self.setStamina(self.getStamina()-10)
+            else:
+                print("Je n'ai pas assez de mana")
 
 class Gladiateur(Personnage):
 
@@ -528,15 +611,18 @@ class Gladiateur(Personnage):
             print("Cette armure ne me convient pas")
 
     def estoc(self, ennemi):
-        randomInt = randint(0,10)
-        if (randomInt > ennemi.getAgi()):
+        if(self.getStamina() >= 10.0):
             randomInt = randint(0,10)
-            if (randomInt <= self.getCrit()) :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme())*2 - (ennemi.getDef() + ennemi.getProtectArmure())/self.getDefPen()))
-                self.setStamina(self.getStamina()-10)
-            else :
-                ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme()) - (ennemi.getDef() + ennemi.getProtectArmure())/self.getDefPen()))
-                self.setStamina(self.getStamina()-10)
+            if (randomInt > ennemi.getAgi()):
+                randomInt = randint(0,10)
+                if (randomInt <= self.getCrit()) :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme())*2 - (ennemi.getDef() + ennemi.getProtectArmure())/self.getDefPen()))
+                    self.setStamina(self.getStamina()-10)
+                else :
+                    ennemi.setHp(ennemi.getHp() - ((self.getForce() + self.getDegatArme()) - (ennemi.getDef() + ennemi.getProtectArmure())/self.getDefPen()))
+                    self.setStamina(self.getStamina()-10)
+        else:
+            print("Je n'ai pas assez de mana")
 
 class Paladin(Personnage):
 
@@ -559,15 +645,18 @@ class Paladin(Personnage):
             print("Cette armure ne me convient pas")
 
     def parade(self, ennemi):
-        randomInt = randint(0,10)
-        if (randomInt > ennemi.getAgi()):
+        if(self.getStamina() >= 10.0):
             randomInt = randint(0,10)
-            if (randomInt <= self.getCrit()) :
-                self.setDef(self.getDef()+self.getDegatArme()*2)
-                self.setStamina(self.getStamina()-10)
-            else :
-                self.setDef(self.getDef()+self.getDegatArme())
-                self.setStamina(self.getStamina()-10)
+            if (randomInt > ennemi.getAgi()):
+                randomInt = randint(0,10)
+                if (randomInt <= self.getCrit()) :
+                    self.setDef(self.getDef()+self.getDegatArme()*2)
+                    self.setStamina(self.getStamina()-10)
+                else :
+                    self.setDef(self.getDef()+self.getDegatArme())
+                    self.setStamina(self.getStamina()-10)
+        else:
+            print("Je n'ai pas assez de mana")
 
 class RPG :
     
@@ -590,16 +679,13 @@ class RPG :
         elif (playerClass == 4):
             player = Mage()
             print("Vous avez choisi la classe Mage.")
-        RPG.playGame(player, playerClass)
+        RPG.beforeFight(player, playerClass)
 
-    def playGame(player, playerClass):
-
-        nbEnemiVaincu = 0
-        palierNiveau = [1,2]
+    def beforeFight(player, playerClass):
 
         while (player.estVivant() != False):
 
-            enemyClass = randint(0,4)
+            enemyClass = randint(1,4)
             if (enemyClass == 1):
                 ennemi = Gladiateur()
                 print("Vous allez affronter un Gladiateur.")
@@ -625,99 +711,264 @@ class RPG :
                     print("Voici vos statistiques :", "Niveau :" ,player.getNiveau(), ", vous avez",  player.getHp(), "Hp,", "vous avez",player.getForce(), "points de force,", "vous avez", player.getDef(), "points de def,", "vous avez", player.getAgi(), "points d'agilité,", "vous avez",player.getCrit(), "points de chance critique,","vous avez", player.getStamina() , "points de stamina")
             elif( stat == 2):
                 print("Vous allez donc directement passer au combat.")
+            
+            RPG.playerTurn(player, playerClass, ennemi, enemyClass)
 
-            while (ennemi.estVivant() == True):
-                print("Il reste", ennemi.getHp(), "pv à l'ennemi")
-                print("Que voulez vous faire ? \n 1. Attaquer \n 2. Magie \n 3. Objets \n 4. Autre")
+    def playerTurn(player, playerClass, ennemi, enemyClass):
+
+        if(ennemi.estVivant() == True):
+            print("Il vous reste", player.getHp(), "pv")
+            print("Il reste", ennemi.getHp(), "pv à l'ennemi")
+            print("Que voulez vous faire ? \n 1. Attaquer \n 2. Magie \n 3. Objets \n 4. Autre")
+            action = int(input())
+            while (action < 1 or action > 4):
+                print("Ce que vous avez entrer n'est pas correct.")
                 action = int(input())
-                if (action == 1):
-                    if (playerClass == 1):
-                        print("Quelle attaque voulez vous utiliser ? \n 1. Attaque normale \n 2. Estoc (Consomme de la stamina)")
-                        choix = int(input())
-                        if (choix == 1):
-                            player.attaquer(ennemi)
-                        elif (choix == 2):
-                            player.estoc(ennemi)
-                    elif (playerClass == 2):
-                        print("Quelle attaque voulez vous utiliser ? \n 1. Attaque normale \n 2. Tir (Consomme de la stamina)")
-                        choix = int(input())
-                        if (choix == 1):
-                            player.attaquer(ennemi)
-                        elif (choix == 2):
-                            player.tir(ennemi)
-                    elif (playerClass == 3):
-                        print("Quelle attaque voulez vous utiliser ? \n 1. Attaque normale \n 2. Attaque rapide (Consomme de la stamina)")
-                        choix = int(input())
-                        if (choix == 1):
-                            player.attaquer(ennemi)
-                        elif (choix == 2):
-                            player.attaqueRapide(ennemi)
-                        elif (choix == 3):
-                            player.backstab(ennemi)
-                    elif (playerClass == 4):
-                        print("Quelle attaque voulez vous utiliser ? \n 1. Attaque normale \n 2. Sort de feu (Consomme de la magie) \n 3. Sort de glace (Consomme de la magie) \n 4. Sort d'eau (Consomme de la magie) \n 5. Sort de mort (Consomme de la magie) \n 6. Sort de vie (Consomme de la magie)")
-                        choix = int(input())
-                        if (choix == 1):
-                            player.attaquer(ennemi)
-                        elif (choix == 2):
-                            player.lancerSortFeu(ennemi)
-                        elif (choix == 3):
-                            player.lancerSortCryo(ennemi)
-                        elif (choix == 4):
-                            player.lancerSortHydro(ennemi)
-                        elif (choix == 5):
-                            player.lancerSortDeath(ennemi)
-                        elif (choix == 6):
-                            player.lancerSortLife(ennemi)
-
-                elif (action == 2):
-                    print("Quel sort voulez vous utiliser ?")
-                elif (action == 3):
-                    print("Quelle potion voulez vous utiliser ? \n 1. Potion de mana \n 2. Potion de force \n 3. Potion de defense \n 4. Potion de soin \n 5. Potion de stamina \n 6. Potion de chance critique \n 7. Potion de d'agilite (chance d'esquiver)")
+            if (action == 1):
+                if (playerClass == 1):
                     choix = int(input())
-                    if(choix == 1):
+                    if (choix == 1):
+                        player.attaquer(ennemi)
+                    elif (choix == 2):
+                        player.estoc(ennemi)
+                elif (playerClass == 2):
+                    print("Quelle attaque voulez vous utiliser ? \n 1. Attaque normale \n 2. Tir (Consomme de la stamina) \n 3. Retour")
+                    choix = int(input())
+                    if (choix == 1):
+                        player.attaquer(ennemi)
+                    elif (choix == 2):
+                        player.tir(ennemi)
+                    elif (choix == 3):
+                        RPG.playerTurn(player, playerClass, ennemi, enemyClass)
+                elif (playerClass == 3):
+                    print("Quelle attaque voulez vous utiliser ? \n 1. Attaque normale \n 2. Attaque rapide (Consomme de la stamina) \n 3. Retour")
+                    choix = int(input())
+                    if (choix == 1):
+                        player.attaquer(ennemi)
+                    elif (choix == 2):
+                        player.attaqueRapide(ennemi)
+                    elif (choix == 3):
+                        RPG.playerTurn(player, playerClass, ennemi, enemyClass)
+                elif (playerClass == 4):
+                    print("Quelle attaque voulez vous utiliser ? \n 1. Attaque normale \n 2. Retour")
+                    choix = int(input())
+                    if (choix == 1):
+                        player.attaquer(ennemi)
+                    elif (choix == 2):
+                        RPG.playerTurn(player, playerClass, ennemi, enemyClass)
+
+            elif (action == 2 and playerClass == 4):
+                print("Quel sort voulez vous utiliser ?  \n 1. Sort de feu (Consomme de la magie) \n 2. Sort de glace (Consomme de la magie) \n 3. Sort d'eau (Consomme de la magie) \n 4. Sort de mort (Consomme de la magie) \n 5. Sort de vie (Consomme de la magie) \n 6. Retour")
+                choix = int(input())
+                if (choix == 1):
+                    player.lancerSortFeu(ennemi)
+                elif (choix == 2):
+                    player.lancerSortCryo(ennemi)
+                elif (choix == 3):
+                    player.lancerSortHydro(ennemi)
+                elif (choix == 4):
+                    player.lancerSortDeath(ennemi)
+                elif (choix == 5):
+                    player.lancerSortLife(ennemi)
+                elif (choix == 6):
+                        RPG.playerTurn(player, playerClass, ennemi, enemyClass)
+            elif (action == 3):
+                print("Quelle potion voulez vous utiliser ? \n 1. Potion de mana \n 2. Potion de force \n 3. Potion de defense \n 4. Potion de soin \n 5. Potion de stamina \n 6. Potion de chance critique \n 7. Potion de d'agilite (chance d'esquiver) \n 8. Retour")
+                choix = int(input())
+                if(choix == 1):
+                    if(Potions().getPotMana() > 0):
                         Potions().setPotMana(-1)
                         player.setMagie(player.getMagieMax() * (10/player.getMagieMax))
-                    elif(choix == 2):
+                    else:
+                        print("Je n'ai pas assez de potion")
+                elif(choix == 2):
+                    if(Potions().getPotMana() > 0):
                         Potions().setPotForce(-1)
                         player.setForce(player.getForce() * (10/player.getForce()))
-                    elif(choix == 3):
+                    else:
+                        print("Je n'ai pas assez de potion")    
+                elif(choix == 3):
+                    if(Potions().getPotMana() > 0):
                         Potions().setPotDef(-1)
                         player.setDef(player.getDef() * (10/player.getDef()))
-                    elif(choix == 4):
+                    else:
+                        print("Je n'ai pas assez de potion")
+                elif(choix == 4):
+                    if(Potions().getPotMana() > 0):
                         Potions().setPotSoin(-1)
                         player.setHp(player.getHp() * (10/player.getHp()))
-                    elif(choix == 5):
+                    else:
+                        print("Je n'ai pas assez de potion")
+                elif(choix == 5):
+                    if(Potions().getPotMana() > 0):
                         Potions().setPotStamina(-1)
                         player.setStamina(player.getStamina() * (10/player.getStamina()))
-                    elif(choix == 6):
+                    else:
+                        print("Je n'ai pas assez de potion")
+                elif(choix == 6):
+                    if(Potions().getPotMana() > 0):
                         Potions().setPotCrit(-1)
                         player.setCrit(player.getCrit() * (10/player.getCrit()))
-                    elif(choix == 7):
+                    else:
+                        print("Je n'ai pas assez de potion")
+                elif(choix == 7):
+                    if(Potions().getPotMana() > 0):
                         Potions().setPotAgi(-1)
                         player.setAgi(player.getAgi() * (10/player.getAgi()))
-                elif(action == 4) :
-                    print("Que voulez vous faire ? \n 1. Voir vos statistiques.\n 2. Voir vos potions.")
-                    choix = int(input())
-                    if(choix == 1):
-                        if (playerClass == 4):
-                            print("Voici vos statistiques :", "Niveau :" ,player.getNiveau(), ", vous avez",  player.getHp(), "Hp,", "vous avez",player.getForce(), "points de force,", "vous avez", player.getDef(), "points de def,", "vous avez", player.getAgi(), "points d'agilité,", "vous avez",player.getCrit(), "points de chance critique,","vous avez", player.getMagie(), "points de magie")
-                        else :
-                            print("Voici vos statistiques :", "Niveau :" ,player.getNiveau(), ", vous avez",  player.getHp(), "Hp,", "vous avez",player.getForce(), "points de force,", "vous avez", player.getDef(), "points de def,", "vous avez", player.getAgi(), "points d'agilité,", "vous avez",player.getCrit(), "points de chance critique,","vous avez", player.getStamina(), "points de Stamina")
-                    elif(choix == 2):
-                        print("Vous avez", Potions().getPotMana(), "potions de mana,", "vous avez", Potions().getPotForce(), "potions de force,", "vous avez", Potions().getPotDef(), "potions de defense,", "vous avez", Potions().getPotSoin(), "potions de soin,",  "vous avez", Potions().getPotStamina(), "potions de stamina,", "vous avez", Potions().getPotCrit(), "potions de chance critique,", "vous avez", Potions().getPotAgi(), "potions de d'agilite.")
-                    elif (choix == 3):
-                        exit()
+                    else:
+                        print("Je n'ai pas assez de potion")
+                elif (choix == 8):
+                        RPG.playerTurn(player, playerClass, ennemi, enemyClass)
+            elif(action == 4) :
+                print("Que voulez vous faire ? \n 1. Voir vos statistiques.\n 2. Voir vos potions. \n 3. Quitter \n 4. Retour")
+                choix = int(input())
+                if(choix == 1):
+                    if (playerClass == 4):
+                        print("Voici vos statistiques :", "Niveau :" ,player.getNiveau(), ", vous avez",  player.getHp(), "Hp,", "vous avez",player.getForce(), "points de force,", "vous avez", player.getDef(), "points de def,", "vous avez", player.getAgi(), "points d'agilité,", "vous avez",player.getCrit(), "points de chance critique,","vous avez", player.getMagie(), "points de magie")
+                    else :
+                        print("Voici vos statistiques :", "Niveau :" ,player.getNiveau(), ", vous avez",  player.getHp(), "Hp,", "vous avez",player.getForce(), "points de force,", "vous avez", player.getDef(), "points de def,", "vous avez", player.getAgi(), "points d'agilité,", "vous avez",player.getCrit(), "points de chance critique,","vous avez", player.getStamina(), "points de Stamina")
+                elif(choix == 2):
+                    print("Vous avez", Potions().getPotMana(), "potions de mana,", "vous avez", Potions().getPotForce(), "potions de force,", "vous avez", Potions().getPotDef(), "potions de defense,", "vous avez", Potions().getPotSoin(), "potions de soin,",  "vous avez", Potions().getPotStamina(), "potions de stamina,", "vous avez", Potions().getPotCrit(), "potions de chance critique,", "vous avez", Potions().getPotAgi(), "potions de d'agilite.")
+                elif (choix == 3):
+                    exit()
+                elif (choix == 4):
+                    RPG.playerTurn(player, playerClass, ennemi, enemyClass)
+            else :
+                print("Je ne peux pas effectuer cette action.")
+            RPG.enemyTurn(player, playerClass, ennemi, enemyClass)
+        else:
+            RPG.afterFight(player, ennemi)
+
+    def enemyTurn(player, playerClass, ennemi, enemyClass):
+
+        if (player.estVivant() == True):
+            action = randint(1,3)
+            if (action == 1):
+                if (enemyClass == 1):
+                    choix = randint(1,2)
+                    if (choix == 1):
+                        ennemi.attaquer(player)
+                    elif (choix == 2):
+                        ennemi.estoc(player)
+                elif (enemyClass == 2):
+                    choix = randint(1,2)
+                    if (choix == 1):
+                        ennemi.attaquer(player)
+                    elif (choix == 2):
+                        ennemi.tir(player)
+                elif (enemyClass == 3):
+                    choix = randint(1,2)
+                    if (choix == 1):
+                        ennemi.attaquer(player)
+                    elif (choix == 2):
+                        ennemi.attaqueRapide(player)
+                elif (enemyClass == 4):
+                    choix = 1
+                    if (choix == 1):
+                        ennemi.attaquer(player)
+
+            elif (action == 2 and enemyClass == 4):
+                choix = randint(1,5)
+                if (choix == 1):
+                    ennemi.lancerSortFeu(player)
+                elif (choix == 2):
+                    ennemi.lancerSortCryo(player)
+                elif (choix == 3):
+                    ennemi.lancerSortHydro(player)
+                elif (choix == 4):
+                    ennemi.lancerSortDeath(player)
+                elif (choix == 5):
+                    ennemi.lancerSortLife(player)
+            elif (action == 3):
+                choix = randint(1,7)
+                if(choix == 1):
+                    if(Potions().getPotMana() > 0):
+                        Potions().setPotMana(-1)
+                        ennemi.setMagie(ennemi.getMagieMax() * (10/ennemi.getMagieMax))
+                elif(choix == 2):
+                    if(Potions().getPotMana() > 0):
+                        Potions().setPotForce(-1)
+                        ennemi.setForce(ennemi.getForce() * (10/ennemi.getForce()))    
+                elif(choix == 3):
+                    if(Potions().getPotMana() > 0):
+                        Potions().setPotDef(-1)
+                        ennemi.setDef(ennemi.getDef() * (10/ennemi.getDef()))
+                elif(choix == 4):
+                    if(Potions().getPotMana() > 0):
+                        Potions().setPotSoin(-1)
+                        ennemi.setHp(ennemi.getHp() * (10/ennemi.getHp()))
+                elif(choix == 5):
+                    if(Potions().getPotMana() > 0):
+                        Potions().setPotStamina(-1)
+                        ennemi.setStamina(ennemi.getStamina() * (10/ennemi.getStamina()))
+                elif(choix == 6):
+                    if(Potions().getPotMana() > 0):
+                        Potions().setPotCrit(-1)
+                        ennemi.setCrit(ennemi.getCrit() * (10/ennemi.getCrit()))
+                elif(choix == 7):
+                    if(Potions().getPotMana() > 0):
+                        Potions().setPotAgi(-1)
+                        ennemi.setAgi(ennemi.getAgi() * (10/ennemi.getAgi()))
+            RPG.playerTurn(player, playerClass, ennemi, enemyClass)
+        else:
+            RPG.afterFight(player, ennemi)
+                    
             
-            if (ennemi.estVivant()==False):
-                print("Vous avez vaincu l'ennemi !")
-                nbEnemiVaincu +=1
-                if (nbEnemiVaincu == 1 or nbEnemiVaincu == 2):
-                    player.setNiveau(player.getNiveau() +1)
-                    print("Vous êtes maintenant niveau", player.getNiveau() ,"!")
-                elif(nbEnemiVaincu == (palierNiveau[len(palierNiveau)-2] + palierNiveau[len(palierNiveau)-1])):
-                    player.setNiveau(player.getNiveau() +1)
-                    print("Vous êtes maintenant niveau", player.getNiveau() ,"!")
-                    palierNiveau.append(nbEnemiVaincu)
+    def afterFight(player, ennemi):
+                
+        nbEnemiVaincu = 0
+        palierNiveau = [1,2]
+
+        if (ennemi.estVivant()==False):
+            print("Vous avez vaincu l'ennemi !")
+            nbEnemiVaincu +=1
+            if (nbEnemiVaincu == 1 or nbEnemiVaincu == 2):
+                player.setNiveau(player.getNiveau() +1)
+                print("Vous êtes maintenant niveau", player.getNiveau() ,"!")
+            elif(nbEnemiVaincu == (palierNiveau[len(palierNiveau)-2] + palierNiveau[len(palierNiveau)-1])):
+                player.setNiveau(player.getNiveau() +1)
+                print("Vous êtes maintenant niveau", player.getNiveau() ,"!")
+                palierNiveau.append(nbEnemiVaincu)
+            loot = randint(0,10)
+            if (loot >= 0 or loot <= 4):
+                loot = randint(1,7)
+                if(loot == 1):
+                    Potions.setPotMana(Potions.getPotMana()+1)
+                    print("Vous avez drop une potion de mana")
+                elif(loot == 2):
+                    Potions.setPotForce(Potions.getPotForce()+1)
+                    print("Vous avez drop une potion de force")
+                elif(loot == 3):
+                    Potions.setPotDef(Potions.getPotDef()+1)
+                    print("Vous avez drop une potion de defense")
+                elif(loot == 4):
+                    Potions.setPotSoin(Potions.getPotSoin()+1)
+                    print("Vous avez drop une potion de soin")
+                elif(loot == 5):
+                    Potions.setPotStamina(Potions.getPotStamina()+1)
+                    print("Vous avez drop une potion de stamina")
+                elif(loot == 6):
+                    Potions.setPotCrit(Potions.getPotCrit()+1)
+                    print("Vous avez drop une potion de chance critique")
+                elif(loot == 7):
+                    Potions.setPotAgi(Potions.getPotAgi()+1)
+                    print("Vous avez drop une potion d'agilite")
+            elif (loot >= 5 or loot <=8):
+                loot = randint(1,5)
+                if(loot == 1):
+                    Epee.setQuantite(Epee.getQuantite()+1)
+                elif(loot == 2):
+                    Arc.setQuantite(Arc.getQuantite()+1)
+                elif(loot == 3):
+                    Dague.setQuantite(Dague.getQuantite()+1)
+                elif(loot == 4):
+                    Baton.setQuantite(Baton.getQuantite()+1)
+                elif(loot == 5):
+                    Lance.setQuantite(Lance.getQuantite()+1)
+                elif(loot == 6):
+                    BouclierLance.setQuantite(BouclierLance.getQuantite()+1)
+
+        elif (player.estVivant() == False):
+            print("Vous avez perdu !")
 
 RPG.chooseClass()
